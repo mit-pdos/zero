@@ -41,7 +41,7 @@ module.exports = (robot) ->
     if not patterns?
       return false
     for pattern in patterns
-      re = new RegExp(pattern)
+      re = new RegExp(pattern, 'i')
       if re.test str
         return true
     return false
