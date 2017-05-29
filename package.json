@@ -1,0 +1,19 @@
+{
+  "name": "zero",
+  "private": true,
+  "author": "aathalye@mit.edu",
+  "description": "the pdos slack bot",
+  "dependencies": {
+    "hubot": "^2.19.0",
+    "hubot-conf": "^1.2.1",
+    "hubot-diagnostics": "0.0.1",
+    "hubot-group": "^1.8.0",
+    "hubot-help": "^0.2.0",
+    "hubot-redis-brain": "0.0.3",
+    "hubot-shortcut": "^1.0.5",
+    "hubot-slack": "^4.3.4"
+  },
+  "engines": {
+    "node": "0.10.x"
+  }
+}
