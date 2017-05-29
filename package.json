@@ -4,6 +4,7 @@
   "author": "aathalye@mit.edu",
   "description": "the pdos slack bot",
   "dependencies": {
+    "firebase": "^4.0.0",
     "hubot": "^2.19.0",
     "hubot-conf": "^1.2.1",
     "hubot-diagnostics": "0.0.1",
