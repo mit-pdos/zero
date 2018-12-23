@@ -1,9 +1,6 @@
 # Description:
 #   A Hacker News watcher.
 #
-# Dependencies:
-#   None
-#
 # Configuration:
 #   HUBOT_HN_ROOM - the room to post in.
 #   HUBOT_HN_LIMIT - max number of posts to check (from 0 to 500). Defaults to
