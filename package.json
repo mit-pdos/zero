@@ -9,7 +9,6 @@
     "hubot": "^3.2.0",
     "hubot-conf": "^1.3.0",
     "hubot-diagnostics": "0.0.1",
-    "hubot-group": "^1.8.2",
     "hubot-help": "^0.2.0",
     "hubot-redis-brain": "0.0.3",
     "hubot-shortcut": "^1.0.5",
