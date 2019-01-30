@@ -5,15 +5,15 @@
   "description": "the pdos slack bot",
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
-    "firebase": "^4.0.0",
-    "hubot": "^2.19.0",
+    "firebase": "^5.8.1",
+    "hubot": "^3.2.0",
     "hubot-conf": "^1.2.1",
     "hubot-diagnostics": "0.0.1",
-    "hubot-group": "^1.8.0",
+    "hubot-group": "^1.8.2",
     "hubot-help": "^0.2.0",
     "hubot-redis-brain": "0.0.3",
     "hubot-shortcut": "^1.0.5",
-    "hubot-slack": "^4.3.4"
+    "hubot-slack": "^4.6.0"
   },
   "engines": {
     "node": "0.10.x"
