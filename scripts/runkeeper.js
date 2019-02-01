@@ -71,7 +71,7 @@ module.exports = (robot) => {
     }
   }
 
-  const checkUser = (name, username, callback) => {
+  const checkUser = (name, username, skipCheck, callback) => {
     httpGet(`/user/${username}/activitylist`, true, (err, httpResponse, body) => {
       if (!err && (httpResponse.statusCode === 200)) {
         const $ = cheerio.load(body)
@@ -82,20 +82,33 @@ module.exports = (robot) => {
           return
         }
         identifier = identifier.text()
-        if (posted[username] === identifier) {
-          callback(null, 'already posted')
-          return
+        if (!skipCheck) {
+          if (posted[username] === identifier) {
+            callback(null, 'already posted')
+            return
+          }
+          posted[username] = identifier
         }
-        posted[username] = identifier
 
         const activity = identifier.split(' ')[6]
         const distance = $('.mainContentColumn .statsBar #totalDistance .value').text()
         const distanceUnits = $('.mainContentColumn .statsBar #totalDistance h5').text()
         const duration = $('.mainContentColumn .statsBar #totalDuration .value').text()
         const pace = $('.mainContentColumn .statsBar #averagePace .value').text()
+        const speed = $('.mainContentColumn .statsBar #averageSpeed .value').text()
 
-        const msg = `*${name}* ${pastTense(activity)} ${distance}${distanceUnits} in ${duration} (${pace} pace)`
-
+        let msg
+        if (distance) {
+          if (pace) {
+            msg = `*${name}* ${pastTense(activity)} ${distance}${distanceUnits} in ${duration} (${pace} pace)`
+          } else if (speed) {
+            msg = `*${name}* ${pastTense(activity)} ${distance}${distanceUnits} in ${duration} (${speed} ${distanceUnits}/h)`
+          } else {
+            msg = `*${name}* ${pastTense(activity)} ${distance}${distanceUnits} in ${duration}`
+          }
+        } else {
+          msg = `*${name}* ${pastTense(activity)} for ${duration}`
+        }
         callback(msg, null)
       } else {
         if (err) {
@@ -110,7 +123,7 @@ module.exports = (robot) => {
   const check = () => {
     const room = config('room')
     watching.forEach((elem, index) => {
-      checkUser(elem.name, elem.username, (msg, err) => {
+      checkUser(elem.name, elem.username, false, (msg, err) => {
         if (msg) {
           robot.send({room}, msg)
         }
@@ -125,7 +138,7 @@ module.exports = (robot) => {
     const name = res.match[1]
     const username = res.match[2]
     res.send(`Checking user ${name} (${username})...`)
-    checkUser(name, username, (msg, err) => {
+    checkUser(name, username, true, (msg, err) => {
       if (msg) {
         res.send(msg)
       } else {
