@@ -12,6 +12,7 @@ const CronJob = require('cron').CronJob
 const fetch = require('node-fetch')
 
 const SCHEDULE = '0 0 12 * * *'
+const REMIND_SCHEDULE = '0 0 20 * * 1'
 const TIME_ZONE = 'America/New_York'
 const API_URL = 'https://getfit.mit.edu/team-fitness/api/get_challenge_info'
 
@@ -37,6 +38,12 @@ module.exports = (robot) => {
       // ignore
     }
   }, null, true, TIME_ZONE)
+
+  new CronJob(REMIND_SCHEDULE, () => {
+    const room = config('room')
+    const msg = 'Remember to enter your hours for the last week by 11:59pm tonight!'
+    robot.send({room}, msg)
+  })
 
   async function parseStats() {
     const response = await fetch(API_URL)
