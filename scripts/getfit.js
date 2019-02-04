@@ -49,22 +49,27 @@ module.exports = (robot) => {
     const response = await fetch(API_URL)
     const data = await response.json()
     const teamName = config('team')
+    const week = data.current_week_index + 1
     const allTeams = data.overall_team_ranking
-    const team = allTeams.find(team => team.team_name === teamName)
+    const team = allTeams.find(team =>
+      team.team_name === teamName && parseInt(team.week) === week
+    )
     const allMembers = data.team_progress.team_member_totals
-    const members = allMembers.filter(member => member.team_name === teamName)
+    const members = allMembers.filter(member =>
+      member.team_name === teamName && parseInt(member.week) === week
+    )
     members.sort((a, b) => parseInt(a.rank) - parseInt(b.rank))
     const msg = [ `*${teamName}*`
                 , ''
                 , `*Rank*: ${team.rank}`
-                , `*Total*: ${team.team_total} minutes`
+                , `*Minutes*: ${team.team_total} this week, ${team.total_challenge_minutes} total`
                 , ''
                 ]
     msg.push(...members.map(member => {
       const name = member.user_display_name
-      const thisWeek = member.total_challenge_minutes
+      const thisWeek = member.total_minutes
       const goal = member.challenge_goal
-      const total = member.total_minutes
+      const total = member.total_challenge_minutes
       const rank = member.rank
       return `*${name}*: ${thisWeek}/${goal} this week, ${total} minutes total, rank ${rank}`
     }))
