@@ -129,7 +129,7 @@ module.exports = (robot) => {
         if (msg) {
           robot.send({room}, msg)
         } else {
-          if (errorRoom) {
+          if (errorRoom && err !== 'already posted') {
             robot.send({room: errorRoom}, `Error checking Runkeeper username ${elem.username}: ${err}`)
           }
         }
