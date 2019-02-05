@@ -14,6 +14,7 @@
 //
 // Configuration:
 //   HUBOT_RUNKEEPER_ROOM - the room to post in.
+//   HUBOT_RUNKEEPER_ERROR_ROOM - the room to report errors in.
 //   HUBOT_RUNKEEPER_COOKIE - cookie for bot user.
 //
 // Commands:
@@ -122,10 +123,15 @@ module.exports = (robot) => {
 
   const check = () => {
     const room = config('room')
+    const errorRoom = config('error.room')
     watching.forEach((elem, index) => {
       checkUser(elem.name, elem.username, false, (msg, err) => {
         if (msg) {
           robot.send({room}, msg)
+        } else {
+          if (errorRoom) {
+            robot.send({room: errorRoom}, `Error checking Runkeeper username ${elem.username}: ${err}`)
+          }
         }
       })
     })
