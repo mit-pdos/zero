@@ -33,7 +33,7 @@ module.exports = (robot) => {
     const room = config('room')
     try {
       const msg = ['*MIT GetFit Stats*', '\n'].concat(await parseStats()).join('\n')
-      robot.send({room: room}, msg)
+      robot.send({room}, msg)
     } catch (err) {
       // ignore
     }
@@ -43,7 +43,7 @@ module.exports = (robot) => {
     const room = config('room')
     const msg = 'Remember to enter your hours for the last week by 11:59pm tonight!'
     robot.send({room}, msg)
-  })
+  }, null, true, TIME_ZONE)
 
   async function parseStats() {
     const response = await fetch(API_URL)
