@@ -51,17 +51,19 @@ module.exports = (robot) => {
     const teamName = config('team')
     const week = data.current_week_index + 1
     const allTeams = data.overall_team_ranking
+    const totalTeams = allTeams.filter(team => parseInt(team.week) === week).length
     const team = allTeams.find(team =>
       team.team_name === teamName && parseInt(team.week) === week
     )
     const allMembers = data.team_progress.team_member_totals
+    const totalMembers = allMembers.filter(member => parseInt(member.week) === week).length
     const members = allMembers.filter(member =>
       member.team_name === teamName && parseInt(member.week) === week
     )
     members.sort((a, b) => parseInt(a.rank) - parseInt(b.rank))
     const msg = [ `*${teamName}*`
                 , ''
-                , `*Rank*: ${team.rank}`
+                , `*Rank*: ${team.rank} of ${totalTeams}`
                 , `*Minutes*: ${team.team_total} this week, ${team.total_challenge_minutes} total`
                 , ''
                 ]
@@ -71,7 +73,7 @@ module.exports = (robot) => {
       const goal = member.challenge_goal
       const total = member.total_challenge_minutes
       const rank = member.rank
-      return `*${name}*: ${thisWeek}/${goal} this week, ${total} minutes total, rank ${rank}`
+      return `*${name}*: ${thisWeek}/${goal} this week, ${total} minutes total, rank ${rank} of ${totalMembers}`
     }))
     return msg
   }
