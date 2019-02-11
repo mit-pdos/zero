@@ -73,7 +73,7 @@ module.exports = (robot) => {
       const goal = member.challenge_goal
       const total = member.total_challenge_minutes
       const rank = member.rank
-      return `*${name}*: ${thisWeek}/${goal} this week, ${total} minutes total, rank ${rank} of ${totalMembers}`
+      return `*${name}*: ${thisWeek}/${goal} this week, ${total} minutes total, rank ${rank}`
     }))
     return msg
   }
