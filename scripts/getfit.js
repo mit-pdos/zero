@@ -11,7 +11,7 @@
 const CronJob = require('cron').CronJob
 const fetch = require('node-fetch')
 
-const SCHEDULE = '0 0 12 * * *'
+const SCHEDULE = '0 50 23 * * *'
 const REMIND_SCHEDULE = '0 0 20 * * 1'
 const TIME_ZONE = 'America/New_York'
 const API_URL = 'https://getfit.mit.edu/team-fitness/api/get_challenge_info'
