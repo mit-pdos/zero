@@ -4,6 +4,7 @@
 // Configuration:
 //   HUBOT_GETFIT_TEAM - the team name.
 //   HUBOT_GETFIT_ROOM - the room to post announcements in.
+//   HUBOT_GETFIT_COOKIE - cookie for HTTP request
 //
 // Commands:
 //   hubot getfit stats - announce stats
@@ -46,7 +47,12 @@ module.exports = (robot) => {
   }, null, true, TIME_ZONE)
 
   async function parseStats() {
-    const response = await fetch(API_URL)
+    const opts = {
+      headers: {
+        cookie: config('cookie')
+      }
+    }
+    const response = await fetch(API_URL, opts)
     const data = await response.json()
     const teamName = config('team')
     const week = data.current_week_index + 1
