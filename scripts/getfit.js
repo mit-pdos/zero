@@ -5,6 +5,7 @@
 //   HUBOT_GETFIT_TEAM - the team name.
 //   HUBOT_GETFIT_ROOM - the room to post announcements in.
 //   HUBOT_GETFIT_COOKIE - cookie for HTTP request
+//   HUBOT_GETFIT_ENABLED - 'true' if the bot should announce stats
 //
 // Commands:
 //   hubot getfit stats - announce stats
@@ -31,6 +32,9 @@ module.exports = (robot) => {
   })
 
   new CronJob(SCHEDULE, async () => {
+    if (config('enabled') !== 'true') {
+      return
+    }
     const room = config('room')
     try {
       const msg = ['*MIT GetFit Stats*', '\n'].concat(await parseStats()).join('\n')
@@ -41,6 +45,9 @@ module.exports = (robot) => {
   }, null, true, TIME_ZONE)
 
   new CronJob(REMIND_SCHEDULE, () => {
+    if (config('enabled') !== 'true') {
+      return
+    }
     const room = config('room')
     const msg = 'Remember to enter your hours for the last week by 11:59pm tonight!'
     robot.send({room}, msg)
