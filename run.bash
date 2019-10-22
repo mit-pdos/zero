@@ -4,5 +4,5 @@
 
 while true; do
   source ./env
-  bin/hubot -a slack
+  bin/hubot -a keybase
 done

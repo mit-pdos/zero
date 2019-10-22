@@ -4,16 +4,16 @@
   "author": "aathalye@mit.edu",
   "description": "the pdos slack bot",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.2",
+    "cheerio": "^1.0.0-rc.3",
     "cron": "^1.6.0",
-    "firebase": "^5.8.1",
-    "hubot": "^3.2.0",
+    "firebase": "^5.10.1",
+    "hubot": "^3.3.2",
     "hubot-conf": ">= 2.0.1 < 3.0",
     "hubot-diagnostics": "0.0.1",
     "hubot-help": "^0.2.0",
+    "hubot-keybase": "^1.0.0",
     "hubot-redis-brain": "0.0.3",
     "hubot-shortcut": ">= 2.0.0 < 3.0",
-    "hubot-slack": "^4.6.0",
     "node-fetch": "^2.3.0"
   }
 }
