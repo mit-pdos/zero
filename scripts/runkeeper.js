@@ -139,6 +139,13 @@ module.exports = (robot) => {
 
   setInterval(check, POLL_INTERVAL)
 
+  // for debugging
+  robot.respond(/runkeeper\s+forget\s+"(.*)"/, (res) => {
+    const username = res.match[1]
+    posted[username] = null
+    res.send(`Cleared last posted for ${username}`)
+  })
+
   // for debugging purposes
   robot.respond(/runkeeper\s+check\s+"(.*)"\s+"(.*)"/, (res) => {
     const name = res.match[1]
