@@ -142,8 +142,9 @@ module.exports = (robot) => {
   // for debugging
   robot.respond(/runkeeper\s+forget\s+"(.*)"/, (res) => {
     const username = res.match[1]
+    const previous = posted[username]
     posted[username] = null
-    res.send(`Cleared last posted for ${username}`)
+    res.send(`Cleared last posted for ${username} (was "${previous}")`)
   })
 
   // for debugging purposes
