@@ -56,6 +56,7 @@ module.exports = (robot) => {
   async function parseStats() {
     const opts = {
       headers: {
+        // note: the only cookie required is the one of the form "SSE...=..."
         cookie: config('cookie')
       }
     }
