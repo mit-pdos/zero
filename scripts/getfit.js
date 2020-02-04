@@ -37,7 +37,7 @@ module.exports = (robot) => {
     }
     const room = config('room')
     try {
-      const msg = ['*MIT GetFit Stats*', '\n'].concat(await parseStats()).join('\n')
+      const msg = (await parseStats()).join('\n')
       robot.send({room}, msg)
     } catch (err) {
       // ignore
