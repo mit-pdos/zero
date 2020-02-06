@@ -121,6 +121,8 @@ module.exports = (robot) => {
     })
   }
 
+  let errors = 0
+
   const check = () => {
     const room = config('room')
     const errorRoom = config('error.room')
@@ -128,9 +130,17 @@ module.exports = (robot) => {
       checkUser(elem.name, elem.username, false, (msg, err) => {
         if (msg) {
           robot.send({room}, msg)
+          errors = 0
         } else {
           if (errorRoom && err !== 'already posted') {
-            robot.send({room: errorRoom}, `Error checking Runkeeper username ${elem.username}: ${err}`)
+            // suppress transient errors
+            errors += 1
+            if (errors >= 5) {
+              robot.send({room: errorRoom}, `Error checking Runkeeper username ${elem.username}: ${err}`)
+              errors = 0
+            }
+          } else {
+            errors = 0
           }
         }
       })
