@@ -68,6 +68,7 @@ module.exports = (robot) => {
       case 'walk': return 'walked'
       case 'hike': return 'hiked'
       case 'bike': return 'biked'
+      case 'row': return 'rowed'
       default: return activity
     }
   }
