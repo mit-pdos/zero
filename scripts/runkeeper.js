@@ -123,6 +123,14 @@ module.exports = (robot) => {
   }
 
   let errors = 0
+  let lastReport = new Date(0)
+  let reportWait = 0
+
+  const exponentialBackoffNext = () => {
+    reportWait = Math.max(reportWait, 5 * 60 * 1000) // base: 5 minutes
+    reportWait = reportWait * 2
+    reportWait = Math.max(reportWait, 24 * 60 * 60 * 1000) // max: 24 hours
+  }
 
   const check = () => {
     const room = config('room')
@@ -132,16 +140,21 @@ module.exports = (robot) => {
         if (msg) {
           robot.send({room}, msg)
           errors = 0
+          reportWait = 0
         } else {
           if (errorRoom && err !== 'already posted') {
             // suppress transient errors
             errors += 1
-            if (errors >= 5) {
+            const now = new Date()
+            if (errors >= 5 && now - lastReport >= reportWait) {
               robot.send({room: errorRoom}, `Error checking Runkeeper username ${elem.username}: ${err}`)
+              lastReport = new Date()
+              exponentialBackoffNext()
               errors = 0
             }
           } else {
             errors = 0
+            reportWait = 0
           }
         }
       })
