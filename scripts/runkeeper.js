@@ -148,7 +148,7 @@ module.exports = (robot) => {
             const now = new Date()
             if (errors >= 5 && now - lastReport >= reportWait) {
               robot.send({room: errorRoom}, `Error checking Runkeeper username ${elem.username}: ${err}`)
-              lastReport = new Date()
+              lastReport = now
               exponentialBackoffNext()
               errors = 0
             }
