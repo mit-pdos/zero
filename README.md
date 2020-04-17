@@ -41,3 +41,5 @@ You can write your own scripts in `./scripts/{name}.coffee`.
 
 If you want to install an existing Hubot plugin, make sure to `npm install
 --save` it and then add it to `./external-scripts.json`.
+
+[hubot]: https://hubot.github.com/
