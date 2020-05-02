@@ -27,6 +27,7 @@ const cheerio = require('cheerio')
 
 const POLL_INTERVAL = 5 * 60 * 1000 // in milliseconds
 const BASE_URL = 'https://runkeeper.com'
+const CLIMB_THRESHOLD = 300 // in feet
 
 module.exports = (robot) => {
 
@@ -98,15 +99,17 @@ module.exports = (robot) => {
         const duration = $('.mainContentColumn .statsBar #totalDuration .value').text()
         const pace = $('.mainContentColumn .statsBar #averagePace .value').text()
         const speed = $('.mainContentColumn .statsBar #averageSpeed .value').text()
+        const climb = parseInt($('.mainContentColumn #chartSection #totalClimb .value').text())
+        const climbStr = (climb && climb >= CLIMB_THRESHOLD) ? ` ${climb > 0 ? '+' : ''}${climb}ft` : ''
 
         let msg
         if (distance) {
           if (pace) {
-            msg = `*${name}* ${pastTense(activity)} ${distance}${distanceUnits} in ${duration} (${pace} pace)`
+            msg = `*${name}* ${pastTense(activity)} ${distance}${distanceUnits}${climbStr} in ${duration} (${pace} pace)`
           } else if (speed) {
-            msg = `*${name}* ${pastTense(activity)} ${distance}${distanceUnits} in ${duration} (${speed} ${distanceUnits}/h)`
+            msg = `*${name}* ${pastTense(activity)} ${distance}${distanceUnits}${climbStr} in ${duration} (${speed} ${distanceUnits}/h)`
           } else {
-            msg = `*${name}* ${pastTense(activity)} ${distance}${distanceUnits} in ${duration}`
+            msg = `*${name}* ${pastTense(activity)} ${distance}${distanceUnits}${climbStr} in ${duration}`
           }
         } else {
           msg = `*${name}* ${pastTense(activity)} for ${duration}`
