@@ -100,16 +100,16 @@ module.exports = (robot) => {
         const pace = $('.mainContentColumn .statsBar #averagePace .value').text()
         const speed = $('.mainContentColumn .statsBar #averageSpeed .value').text()
         const climb = parseInt($('.mainContentColumn #chartSection #totalClimb .value').text())
-        const climbStr = (climb && climb >= CLIMB_THRESHOLD) ? ` ${climb > 0 ? '+' : ''}${climb}ft` : ''
+        const climbStr = (climb && climb >= CLIMB_THRESHOLD) ? ` ${climb > 0 ? '+' : ''}${climb} ft` : ''
 
         let msg
         if (distance) {
           if (pace) {
-            msg = `*${name}* ${pastTense(activity)} ${distance}${distanceUnits}${climbStr} in ${duration} (${pace} pace)`
+            msg = `*${name}* ${pastTense(activity)} ${distance} ${distanceUnits}${climbStr} in ${duration} (${pace} pace)`
           } else if (speed) {
-            msg = `*${name}* ${pastTense(activity)} ${distance}${distanceUnits}${climbStr} in ${duration} (${speed} ${distanceUnits}/h)`
+            msg = `*${name}* ${pastTense(activity)} ${distance} ${distanceUnits}${climbStr} in ${duration} (${speed} ${distanceUnits}/h)`
           } else {
-            msg = `*${name}* ${pastTense(activity)} ${distance}${distanceUnits}${climbStr} in ${duration}`
+            msg = `*${name}* ${pastTense(activity)} ${distance} ${distanceUnits}${climbStr} in ${duration}`
           }
         } else {
           msg = `*${name}* ${pastTense(activity)} for ${duration}`
