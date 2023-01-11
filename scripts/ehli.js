@@ -7,7 +7,7 @@ module.exports = (robot) => {
 
   robot.hear(/(.|\s+)*/, (res) => {
     const room = res.message.room
-    const msg = res.match[0]
+    let msg = res.match[0]
     if (!(config('room') || '').split(',').includes(room)) {
       return
     }
@@ -15,12 +15,19 @@ module.exports = (robot) => {
       // don't bother with multi-line messages
       return
     }
-    for (const [re, replacement] of REPLACEMENT_TABLE) {
-      if (msg.match(re)) {
-        const fixed = msg.replace(re, replacement)
-        res.send(`Did you mean: "${fixed}"`)
-        return
+    let lastMsg
+    let limit = 10 // haven't thought hard enough about whether there can be infinite expansion
+    do {
+      lastMsg = msg
+      for (const [re, replacement] of REPLACEMENT_TABLE) {
+        if (msg.match(re)) {
+          msg = msg.replace(re, replacement)
+        }
       }
+      limit--
+    } while (limit > 0 && msg !== lastMsg)
+    if (msg !== res.match[0]) {
+      res.send(`Did you mean: "${msg}"`)
     }
   })
 
