@@ -6,6 +6,9 @@ module.exports = (robot) => {
   const config = require('hubot-conf')('ehli', robot)
 
   robot.hear(/(.|\s+)*/, (res) => {
+    if (Math.random() < 0.9) {
+      return
+    }
     const room = res.message.room
     let msg = res.match[0]
     if (!(config('room') || '').split(',').includes(room)) {
